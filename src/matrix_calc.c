@@ -195,8 +195,34 @@ void rowEchelonFormDriver(){
 	pmat = NULL;
 }
 
-void determinant(Matrix *mat){
+int determinant2x2(int a, int b, int c, int d){
+  return (a*d)-(b*c);
+}
 
+void determinantDriver(){
+  printf("As of now the determinant calculation only supports 2x2 and 3x3 matricies:\n");
+  Matrix mat = initializeMatrix();
+  Matrix *pmat = &mat;
+  printMatrix(pmat);
+
+  if(pmat->rows == 2 && pmat->cols == 2){
+    int det = determinant2x2(pmat->data[0][0], pmat->data[1][1], pmat->data[0][1], pmat->data[1][0]);
+    printf("The determinant of the matrix is: %d\n", det);
+
+  } else if(pmat->rows == 3 && pmat->cols == 3){
+    int a, b, c;
+    a = pmat->data[0][0] * determinant2x2(pmat->data[1][1], pmat->data[1][2], pmat->data[2][1], pmat->data[2][2]);
+    b = pmat->data[0][1] * determinant2x2(pmat->data[1][0], pmat->data[1][2], pmat->data[2][0], pmat->data[2][2]);
+    c = pmat->data[0][2] * determinant2x2(pmat->data[1][0], pmat->data[1][1], pmat->data[2][0], pmat->data[2][1]);
+    int det = a-b+c;
+    printf("The determinant of the matrix is: %d\n", det);
+
+  } else{
+    printf("Invalid matrix dimentions\n");
+  }
+
+  freeMatrix(pmat);
+  pmat = NULL;
 }
 
 
@@ -237,6 +263,10 @@ int main(){
  			case ROWECHELONFORM:
  				rowEchelonFormDriver();
  				break;
+
+            case DETERMINANT:
+            	determinantDriver();
+                break;
 
  			case TEST:
  				test();
