@@ -228,14 +228,6 @@ void determinantDriver(){
 
 
 void test(){
-	Matrix mat = initializeMatrix();
-	Matrix *pmat = &mat;
-	printMatrix(pmat);
-	printf("\n");
-	multiplyRowBy(pmat,0,8);
-	printMatrix(pmat);
-	printf("Test done:\n");
-	
 }
 
 
