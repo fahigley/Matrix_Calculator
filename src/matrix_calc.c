@@ -30,7 +30,11 @@ typedef struct{
 
 //help menu printout
 void helpMenu(){
-	printf("HELP MENU\n");
+  printf("Enter the character associated with the matrix calculation you want\n");
+  printf("To quit the program use 'q' \n");
+  printf("The current version supports the following calculations:\n");
+  printf("	Reduced row echelon form: 'r' \n");
+  printf("	Determinant: 'd' \n");
 }
 
 
@@ -288,7 +292,7 @@ void test(){
 //main driver function
 int main(){
  	printf("Welcome to matrix Calculator!\n");
- 	printf("This apps purpose is to help with matrix calculations\n");
+ 	helpMenu();
  	
  	char optionbuf[4];
  	
