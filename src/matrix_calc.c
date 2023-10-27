@@ -282,6 +282,32 @@ void determinantDriver(){
   pmat = NULL;
 }
 
+Matrix * matrixMultiplication(Matrix * mat1, Matrix * mat2){
+
+}
+
+void multiplicationDriver(){
+
+	printf("Enter the first matrix\n");
+	Matrix  matrix1 = initializeMatrix();
+	Matrix *pmat1 = &matrix1;
+
+	printf("Enter the second matrix:\n");
+	Matrix matrix2 = initializeMatrix();
+	Matrix * pmat2 = &matrix2;
+
+	Matrix * ans = matrixMultiplication(pmat1, pmat2);
+	printf("The answer is:\n");
+	printMatrix(ans);
+
+	freeMatrix(pmat1);
+	freeMatrix(pmat2);
+	pmat1 = NULL;
+	pmat2 = NULL;
+
+
+
+}
 
 
 //extra function for testing
