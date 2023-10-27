@@ -10,6 +10,7 @@ enum Option{
 	TEST = 't',
 	ROWECHELONFORM = 'r',
 	DETERMINANT = 'd',
+	MULTIPLICATION = 'm'
 };
 
 
@@ -283,6 +284,7 @@ void determinantDriver(){
 }
 
 Matrix * matrixMultiplication(Matrix * mat1, Matrix * mat2){
+	return NULL;
 
 }
 
@@ -320,8 +322,8 @@ int main(){
  	printf("Welcome to matrix Calculator!\n");
  	helpMenu();
  	
- 	char optionbuf[4];
- 	
+ 	char optionbuf[5];
+	
  	while(optionbuf[0] != QUIT){
  		printf("Select a matrix calculation or type 'h' for help: ");
  		scanf("%4s", optionbuf);
