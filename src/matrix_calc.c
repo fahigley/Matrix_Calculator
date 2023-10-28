@@ -14,11 +14,9 @@ enum Option{
 };
 
 
-// struct for matrix
-//
-// @param rows number of rows
-// @param cols number of columns
-// @param data 2d array that stores matrix values
+/**
+ * the matrix struct
+*/
 typedef struct{
 	int rows; //number of rows
 	int cols; // number of columns
@@ -29,19 +27,24 @@ typedef struct{
 //functions
 
 
-//help menu printout
+/**
+ * prints out some help text like the different calculations and how to run them
+*/
 void helpMenu(){
   printf("Enter the character associated with the matrix calculation you want\n");
   printf("To quit the program use 'q' \n");
   printf("The current version supports the following calculations:\n");
   printf("	Reduced row echelon form: 'r' \n");
   printf("	Determinant: 'd' \n");
-}
+  printf("	Matirx Multiplication: 'm'\n");
+  }
 
 
-//initializes a matrix struct
-//
-//@return matrix struct
+/**
+ * initializes a matrix using user input
+ * 
+ * @return the new matrix
+*/
 Matrix initializeMatrix(){
 	//initialize matrix
 	Matrix matrix;
@@ -79,10 +82,16 @@ Matrix initializeMatrix(){
     return matrix;
 }
 
-// initilizes a matrix without user input
-//
-//@return the initialized matrix 
 
+/**
+ * initializes a matrix without user input
+ * all values of the matrix are set to 0
+ * 
+ * @param rows the number of rows of the new matrix
+ * @param cols the number of columns of the new matrix
+ * 
+ * @return the new matrix struct
+*/
 Matrix initailizeMatrixNoInput(int rows, int cols){
 	Matrix matrix;
 
@@ -111,10 +120,12 @@ Matrix initailizeMatrixNoInput(int rows, int cols){
 	return matrix;
 }
 
-//frees the memory of the given matrix
-//
-//@param mat given matrix to be freed
-void freeMatrix(Matrix *mat){\
+/**
+ * frees the memory of a given matrix 
+ * 
+ * @param mat the given matrix to be freed
+*/
+void freeMatrix(Matrix *mat){
 	//iterate throught the matrix and free memory
 	for(int i = 0; i < mat->rows; i++){
 		free(mat->data[i]);
@@ -124,9 +135,11 @@ void freeMatrix(Matrix *mat){\
 }
 
 
-//prints a given matrix to the terminal
-//
-//@param mat given matrix to be printed
+/**
+ * prints a given matrix to the terminal
+ * 
+ * @param mat the given martix to be printed
+*/
 void printMatrix(Matrix *mat){
 	//iterate through the matrix and print each element
 	if(mat->data == NULL){
@@ -146,11 +159,13 @@ void printMatrix(Matrix *mat){
 
 
 
-// swaps two given rows in a matrix
-//
-//@param mat given matrix
-//@param row1 first row to be swapped
-//@param row2 second row to be swapped
+/**
+ * swaps 2 rows in a matrix
+ * 
+ * @param mat the given matrix 
+ * @param row1 the first row
+ * @param row2 the second row
+*/
 void swapRows(Matrix *mat, int row1, int row2){
 	//check for valid row1 and row 2 values
 	if (row1 < 0 || row1 >= mat->rows || row2 < 0 || row2 >= mat->rows) {
@@ -184,15 +199,14 @@ void swapRows(Matrix *mat, int row1, int row2){
 
 
 
-//adds  a multiple of row2 to row 1
-//set factor to 1 to keep same values
-//
-//@param mat given matrix
-//@param row1 first row
-//@param row2 second row
-//@param factor multiple row 2 will be multiplied
-//
-//
+/** 
+ * adds a multiple of row1 to row2
+ * 
+ * @param mat the given matrix
+ * @param row1 the row where the sum will be
+ * @param row2 the row to be multiplied then added to row1
+ * @param factor the number that row 2 will be multiplied by
+*/
 void addRowsByMultiple(Matrix *mat, int row1, int row2, float factor){
 	if(mat == NULL){
 		return;
@@ -206,12 +220,13 @@ void addRowsByMultiple(Matrix *mat, int row1, int row2, float factor){
 
 
 
-//multiplies a given row by a multiplier
-//
-//@param mat given matrix
-// @param row given row to be multiplied
-// @param mulitplier given multiplier
-//
+/**
+ * multiplies a given row by a multiplier
+ * 
+ * @param mat the given matrix
+ * @param row the row to be multiplied
+ * @param multiplier the multiplier for the row
+*/
 void multiplyRowBy(Matrix *mat, int row, int multiplier){
 	if(mat == NULL){
 		return;
@@ -224,10 +239,11 @@ void multiplyRowBy(Matrix *mat, int row, int multiplier){
 }
 
 
-//Reduces a given matrix to Reduced row echelon form
-//
-// @param mat given matrix
-//
+/**
+ * reduced a matrix to reduced row echelon form 
+ * 
+ * @param mat given matrix
+*/
 void reducedRowEchelonForm(Matrix *mat){
 	int lead = 0;
 	int rowCount = mat->rows;
@@ -262,7 +278,9 @@ void reducedRowEchelonForm(Matrix *mat){
 }
 
 
-// driver function for the reduced row echelon calculation
+/**
+ * driver function for the reduced row echelon calculation
+*/
 void rowEchelonFormDriver(){
 	Matrix mat = initializeMatrix();
 	Matrix *pmat = &mat;
@@ -276,57 +294,79 @@ void rowEchelonFormDriver(){
 }
 
 
-//calculates the determinant for a 3x3 matrix
-//
-//@param a (1,1) of the given matrix
-//@param b (1,2) of the given matrix
-//@param c (2,1) of the given matrix
-//@param d (2,2) of the given matrix
+/**
+ * calculates the determinant for a 2x2 matrix
+ *
+ * @param a (1,1) of the given matrix
+ * @param b (1,2) of the given matrix
+ * @param c (2,1) of the given matrix
+ * @param d (2,2) of the given matrix
+*/
 int determinant2x2(int a, int b, int c, int d){
   return (a*d)-(b*c);
 }
 
 
-//driver for the determinant calculation
+/**
+ * driver function for the determinant calculation
+*/
 void determinantDriver(){
-  printf("As of now the determinant calculation only supports 2x2 and 3x3 matricies:\n");
-  Matrix mat = initializeMatrix();
-  Matrix *pmat = &mat;
-  printMatrix(pmat);
+	//initialize the matrix
+  	printf("As of now the determinant calculation only supports 2x2 and 3x3 matricies:\n");
+  	Matrix mat = initializeMatrix();
+  	Matrix *pmat = &mat;
+  	printMatrix(pmat);
 
-  if(pmat->rows == 2 && pmat->cols == 2){
-    int det = determinant2x2(pmat->data[0][0], pmat->data[1][1], pmat->data[0][1], pmat->data[1][0]);
-    printf("The determinant of the matrix is: %d\n", det);
+  	if(pmat->rows == 2 && pmat->cols == 2){
+    	int det = determinant2x2(pmat->data[0][0], pmat->data[1][1], pmat->data[0][1], pmat->data[1][0]);
+    	printf("The determinant of the matrix is: %d\n", det);
 
-  } else if(pmat->rows == 3 && pmat->cols == 3){
-    int a, b, c;
-    a = pmat->data[0][0] * determinant2x2(pmat->data[1][1], pmat->data[1][2], pmat->data[2][1], pmat->data[2][2]);
-    b = pmat->data[0][1] * determinant2x2(pmat->data[1][0], pmat->data[1][2], pmat->data[2][0], pmat->data[2][2]);
-    c = pmat->data[0][2] * determinant2x2(pmat->data[1][0], pmat->data[1][1], pmat->data[2][0], pmat->data[2][1]);
-    int det = a-b+c;
-    printf("The determinant of the matrix is: %d\n", det);
+  	} else if(pmat->rows == 3 && pmat->cols == 3){
+    	int a, b, c;
+    	a = pmat->data[0][0] * determinant2x2(pmat->data[1][1], pmat->data[1][2], pmat->data[2][1], pmat->data[2][2]);
+    	b = pmat->data[0][1] * determinant2x2(pmat->data[1][0], pmat->data[1][2], pmat->data[2][0], pmat->data[2][2]);
+    	c = pmat->data[0][2] * determinant2x2(pmat->data[1][0], pmat->data[1][1], pmat->data[2][0], pmat->data[2][1]);
+    	int det = a-b+c;
+    	printf("The determinant of the matrix is: %d\n", det);
 
-  } else{
-    printf("Invalid matrix dimentions\n");
-  }
+  	}else{
+    	printf("Invalid matrix dimentions\n");
+  	}
 
-  freeMatrix(pmat);
-  pmat = NULL;
+  	freeMatrix(pmat);
+  	pmat = NULL;
 }
 
-Matrix * matrixMultiplication(Matrix * mat1, Matrix * mat2){
+/**
+ * multiplies the 2 given matricies
+ * 
+ * @param mat1 the first matrix
+ * @param mat2 the second matrix
+ * 
+ * @return the product of the matrix multiplication
+*/
+Matrix matrixMultiplication(Matrix * mat1, Matrix * mat2){
 	Matrix ans = initailizeMatrixNoInput(mat1->rows, mat2->cols);
-	Matrix *pans = &ans;
 	int mat_value = 0;
 
-	for(int i = 0; i < mat1->cols; i++){
-		
-	}
-	return NULL;
+	for (int i = 0; i < mat1->rows; i++) { 
+        for (int j = 0; j < mat2->cols; j++) { 
+            ans.data[i][j] = 0; 
+  
+            for (int k = 0; k < mat2->rows; k++) { 
+                ans.data[i][j] += mat1->data[i][k] * mat2->data[k][j]; 
+            } 
+		}
+	}		
+	return ans;
 
 }
 
+/**
+ * simple driver function for matrix multiplication
+*/
 void multiplicationDriver(){
+	Matrix ans;
 
 	printf("Enter the first matrix\n");
 	Matrix  matrix1 = initializeMatrix();
@@ -336,10 +376,14 @@ void multiplicationDriver(){
 	Matrix matrix2 = initializeMatrix();
 	Matrix * pmat2 = &matrix2;
 
-	Matrix * ans = matrixMultiplication(pmat1, pmat2);
-	printf("The answer is:\n");
-	printMatrix(ans);
-
+	if(pmat1->cols == pmat2->rows){
+		ans = matrixMultiplication(pmat1, pmat2);
+		printf("The answer is:\n");
+		printMatrix(&ans);
+	}else{
+		printf("Matrix dimentions are invalid:\n");
+	}
+	freeMatrix(&ans);
 	freeMatrix(pmat1);
 	freeMatrix(pmat2);
 	pmat1 = NULL;
@@ -350,12 +394,16 @@ void multiplicationDriver(){
 }
 
 
-//extra function for testing
+/**
+ * extra function for testing
+*/
 void test(){
 }
 
 
-//main driver function
+/**
+ * main function
+*/
 int main(){
  	printf("Welcome to matrix Calculator!\n");
  	helpMenu();
