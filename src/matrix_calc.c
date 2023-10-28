@@ -79,6 +79,37 @@ Matrix initializeMatrix(){
     return matrix;
 }
 
+// initilizes a matrix without user input
+//
+//@return the initialized matrix 
+
+Matrix initailizeMatrixNoInput(int rows, int cols){
+	Matrix matrix;
+
+	//allocate memory for rows
+    matrix.data = (float **)malloc(matrix.rows * sizeof(float *));
+    if(matrix.data == NULL){
+    	fprintf(stderr, "Memory allocation failed for matrix.data\n");
+        exit(1);
+    }
+
+    //allocate memory for coumns
+    for (int i = 0; i < matrix.rows; i++) {
+        matrix.data[i] = (float *)malloc(matrix.cols * sizeof(int));
+        if(matrix.data[i] == NULL){
+        	fprintf(stderr, "Memory allocation failed for matrix.data\n");
+        	exit(1);
+        }
+    }
+
+	for(int i = 0; i < matrix.rows; i++){
+		for(int j = 0; j < matrix.cols; j++){
+			matrix.data[i][j] = 0;
+		}
+	}
+
+	return matrix;
+}
 
 //frees the memory of the given matrix
 //
@@ -284,6 +315,13 @@ void determinantDriver(){
 }
 
 Matrix * matrixMultiplication(Matrix * mat1, Matrix * mat2){
+	Matrix ans = initailizeMatrixNoInput(mat1->rows, mat2->cols);
+	Matrix *pans = &ans;
+	int mat_value = 0;
+
+	for(int i = 0; i < mat1->cols; i++){
+		
+	}
 	return NULL;
 
 }
@@ -344,6 +382,10 @@ int main(){
             case DETERMINANT:
             	determinantDriver();
                 break;
+
+			case MULTIPLICATION:
+				multiplicationDriver();
+				break;
 
  			case TEST:
  				test();
