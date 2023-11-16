@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-
 //enums for user interface
 enum Option{
 	QUIT = 'q',
