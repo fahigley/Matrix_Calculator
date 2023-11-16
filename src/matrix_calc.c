@@ -390,9 +390,10 @@ void multiplicationDriver() {
         printMatrix(&ans);
 
         // Free the matrices after using the result
+		freeMatrix(&ans);
         freeMatrix(pmat1);
         freeMatrix(pmat2);
-        freeMatrix(&ans);
+        
     } else {
         printf("Matrix dimensions are invalid:\n");
 
