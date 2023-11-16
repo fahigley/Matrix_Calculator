@@ -128,14 +128,20 @@ Matrix initailizeMatrixNoInput(int rows, int cols) {
  * 
  * @param mat the given matrix to be freed
 */
-void freeMatrix(Matrix *mat){
-	//iterate throught the matrix and free memory
-	for(int i = 0; i < mat->rows; i++){
-		free(mat->data[i]);
-	}
-	free(mat->data);
-	//free matrix itself
-	free(mat);
+void freeMatrix(Matrix *mat) {
+    // Iterate through the matrix and free memory
+    for (int i = 0; i < mat->rows; i++) {
+        free(mat->data[i]);
+    }
+
+    // Free matrix data
+    free(mat->data);
+
+    // Set matrix data pointer to NULL
+    mat->data = NULL;
+
+    // Free matrix structure itself
+    free(mat);
 }
 
 
