@@ -92,32 +92,35 @@ Matrix initializeMatrix(){
  * 
  * @return the new matrix struct
 */
-Matrix initailizeMatrixNoInput(int rows, int cols){
-	Matrix matrix;
+Matrix initailizeMatrixNoInput(int rows, int cols) {
+    Matrix matrix;
 
-	//allocate memory for rows
-    matrix.data = (float **)malloc(matrix.rows * sizeof(float *));
-    if(matrix.data == NULL){
-    	fprintf(stderr, "Memory allocation failed for matrix.data\n");
+    // allocate memory for rows
+    matrix.data = (float**)malloc(rows * sizeof(float*));
+    if (matrix.data == NULL) {
+        fprintf(stderr, "Memory allocation failed for matrix.data\n");
         exit(1);
     }
 
-    //allocate memory for coumns
-    for (int i = 0; i < matrix.rows; i++) {
-        matrix.data[i] = (float *)malloc(matrix.cols * sizeof(int));
-        if(matrix.data[i] == NULL){
-        	fprintf(stderr, "Memory allocation failed for matrix.data\n");
-        	exit(1);
+    // allocate memory for columns
+    for (int i = 0; i < rows; i++) {
+        matrix.data[i] = (float*)malloc(cols * sizeof(float));
+        if (matrix.data[i] == NULL) {
+            fprintf(stderr, "Memory allocation failed for matrix.data\n");
+            exit(1);
         }
     }
 
-	for(int i = 0; i < matrix.rows; i++){
-		for(int j = 0; j < matrix.cols; j++){
-			matrix.data[i][j] = 0;
-		}
-	}
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            matrix.data[i][j] = 0;
+        }
+    }
 
-	return matrix;
+    matrix.rows = rows;
+    matrix.cols = cols;
+
+    return matrix;
 }
 
 /**
@@ -130,6 +133,7 @@ void freeMatrix(Matrix *mat){
 	for(int i = 0; i < mat->rows; i++){
 		free(mat->data[i]);
 	}
+	free(mat->data);
 	//free matrix itself
 	free(mat);
 }
@@ -345,52 +349,55 @@ void determinantDriver(){
  * 
  * @return the product of the matrix multiplication
 */
-Matrix matrixMultiplication(Matrix * mat1, Matrix * mat2){
-	Matrix ans = initailizeMatrixNoInput(mat1->rows, mat2->cols);
-	int mat_value = 0;
+Matrix matrixMultiplication(Matrix* mat1, Matrix* mat2) {
+    Matrix ans = initailizeMatrixNoInput(mat1->rows, mat2->cols);
 
-	for (int i = 0; i < mat1->rows; i++) { 
-        for (int j = 0; j < mat2->cols; j++) { 
-            ans.data[i][j] = 0; 
-  
-            for (int k = 0; k < mat2->rows; k++) { 
-                ans.data[i][j] += mat1->data[i][k] * mat2->data[k][j]; 
-            } 
-		}
-	}		
-	return ans;
+    for (int i = 0; i < mat1->rows; i++) {
+        for (int j = 0; j < mat2->cols; j++) {
+            ans.data[i][j] = 0;
 
+            for (int k = 0; k < mat2->rows; k++) {
+                ans.data[i][j] += mat1->data[i][k] * mat2->data[k][j];
+            }
+        }
+    }
+    return ans;
 }
 
 /**
  * simple driver function for matrix multiplication
 */
-void multiplicationDriver(){
-	Matrix ans;
+void multiplicationDriver() {
+    Matrix ans;
 
-	printf("Enter the first matrix\n");
-	Matrix  matrix1 = initializeMatrix();
-	Matrix *pmat1 = &matrix1;
+    printf("Enter the first matrix\n");
+    Matrix matrix1 = initializeMatrix();
+    Matrix *pmat1 = &matrix1;
 
-	printf("Enter the second matrix:\n");
-	Matrix matrix2 = initializeMatrix();
-	Matrix * pmat2 = &matrix2;
+    printf("Enter the second matrix:\n");
+    Matrix matrix2 = initializeMatrix();
+    Matrix *pmat2 = &matrix2;
 
-	if(pmat1->cols == pmat2->rows){
-		ans = matrixMultiplication(pmat1, pmat2);
-		printf("The answer is:\n");
-		printMatrix(&ans);
-	}else{
-		printf("Matrix dimentions are invalid:\n");
-	}
-	freeMatrix(&ans);
-	freeMatrix(pmat1);
-	freeMatrix(pmat2);
-	pmat1 = NULL;
-	pmat2 = NULL;
+    if (pmat1->cols == pmat2->rows) {
+        ans = matrixMultiplication(pmat1, pmat2);
+        printf("The answer is:\n");
+        printMatrix(&ans);
 
+        // Free the matrices after using the result
+        freeMatrix(pmat1);
+        freeMatrix(pmat2);
+        freeMatrix(&ans);
+    } else {
+        printf("Matrix dimensions are invalid:\n");
 
+        // Free matrices if dimensions are invalid
+        freeMatrix(pmat1);
+        freeMatrix(pmat2);
+    }
 
+    // Set pointers to NULL after freeing
+    pmat1 = NULL;
+    pmat2 = NULL;
 }
 
 
