@@ -316,7 +316,6 @@ int determinant2x2(int a, int b, int c, int d){
   return (a*d)-(b*c);
 }
 
-
 /**
  * driver function for the determinant calculation
 */
@@ -407,13 +406,11 @@ void multiplicationDriver() {
     pmat2 = NULL;
 }
 
-
 /**
  * extra function for testing
 */
 void test(){
 }
-
 
 /**
  * main function
